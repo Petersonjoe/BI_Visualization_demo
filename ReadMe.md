@@ -47,7 +47,7 @@ For each sample ETL case, you can browse the dashboard that analyzes whether thi
 
 ![Dashboard](https://i.imgur.com/54g5inp.gif)
 
-If you want to customize your owner dashboard via this demo, please continue the following section.
+If you want to customize your own dashboard via this demo, please continue the following section.
 
 
 > **Coding Structure**
