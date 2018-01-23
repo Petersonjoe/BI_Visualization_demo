@@ -16,7 +16,6 @@ render.html
 *.pyproj
 *.ia4
 *.dbb
-*.txt
 
 # LocalConfig
 test.db
