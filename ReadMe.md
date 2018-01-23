@@ -33,7 +33,23 @@ This demo is a integral project from back-end to front-end. There is a sample da
 
 Here shows the content of **the logon page** of the website, the default user email address is *admin@sample.com* and default password is *123456*:
 
-![Logon Page](https://i.imgur.com/qPPao45.gif)
+![Logon Page](https://i.imgur.com/ueLmXH5.gif)
 
 You can find the main dashboard page which gives the cpu usage in default view. There is a dropdown button which can shift the indexes that monitored.
 
+![Index Shift](https://i.imgur.com/YpfcN2X.gif)
+
+If you are interested in exploring more detail for each machine, just click the gauge of CPU/Memory,
+
+![Case Page](https://i.imgur.com/tjwkeqt.gif)
+
+For each sample ETL case, you can browse the dashboard that analyzes whether this case is health, diving into the execution consumption of each step. See below pic to jump to ETL case detail.
+
+![Dashboard](https://i.imgur.com/54g5inp.gif)
+
+If you want to customize your owner dashboard via this demo, please continue the following section.
+
+
+> **Coding Structure**
+
+To be continue...
