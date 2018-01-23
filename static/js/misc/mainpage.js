@@ -314,7 +314,7 @@ var timercpu, timermemory, timerdisk;
 var casetrendOption = {
     title: {
         x: 'left',
-        text: 'RIT case summary'
+        text: 'Case summary'
     },
     tooltip: {
         trigger: 'item'
@@ -340,7 +340,7 @@ var casetrendOption = {
     ],
     series: [
         {
-            name: 'RIT case summary',
+            name: 'Case summary',
             type: 'bar',
             barCategoryGap: '60%',
             itemStyle: {

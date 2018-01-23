@@ -31,3 +31,9 @@ if the screen shows [http://0.0.0.0:8080](http://localhost:8080), means you has 
 
 This demo is a integral project from back-end to front-end. There is a sample database you should put in your repo's root - [test.db](https://pan.baidu.com/s/1dkqUJ0), the access password is: **w75r**.
 
+Here shows the content of **the logon page** of the website, the default user email address is *admin@sample.com* and default password is *123456*:
+
+![Logon Page](https://i.imgur.com/qPPao45.gif)
+
+You can find the main dashboard page which gives the cpu usage in default view. There is a dropdown button which can shift the indexes that monitored.
+
