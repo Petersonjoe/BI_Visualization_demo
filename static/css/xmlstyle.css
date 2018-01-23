@@ -1,0 +1,18 @@
+ToolInfoList, Info{
+    font-family: Arial;
+    font-size: large;
+}
+
+key{
+    font-family: Arial;
+    font-size: 18px;
+    border-bottom: 5px solid red;
+    font-weight: 600;
+}
+
+value{
+    font-family: Arial;
+    font-size: 16px;
+    margin-right: 100px;
+    border: 2px solid dashed;
+}

@@ -1,0 +1,21 @@
+﻿$def with (info)
+
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Logout</title>
+</head>
+<body>
+    $if info is not None:
+        $if info.msg is not None:
+            <h2>$info.msg</h2>
+            <p>Sign in Again?<a href="/login">Click me</a></p>
+        $else:
+            <h2>Logout Now! GoodBye!</h2>    
+    $else:
+        <h2>Logout Now! GoodBye!</h2>
+    
+</body>
+</html>

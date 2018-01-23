@@ -1,0 +1,159 @@
+﻿$def with (index, name, indexflag)
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>$name</title>
+
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet" />
+    <style type="text/css">
+        #casesize {
+            background-color: #dbdbdb;
+            color: #707070;
+            font-size: 36px;
+            margin: 10px;
+            height: 125px;
+        }
+
+        #tablevols {
+            background-color: #FDF8E4;
+            color: #C09954;
+            font-size: 36px;
+            margin: 10px;
+            height: 125px;
+        }
+
+        #tableamount {
+            background-color: #DEF0D8;
+            color: #448948;
+            font-size: 36px;
+            margin: 10px;
+            height: 125px;
+        }
+
+        #failedtask {
+            background-color: #F2DEDF;
+            color: #BE4846;
+            font-size: 36px;
+            margin: 10px;
+            height: 125px;
+        }
+    </style>
+    <script src="../static/js/jquery.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/echarts/echarts.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <nav class="navbar navbar-default">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navdata" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">$name Detail</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="navdata">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="/">Home <span class="sr-only">(current)</span></a></li>
+                        <li><a href="/mail_input">BI VIEW</a></li>
+                    </ul>
+                    <form class="navbar-form navbar-right">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                        </div>
+                        <button type="submit" class="btn btn-default">Submit</button>
+                    </form>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row" style="background-color: #D9EDF6;margin:10px">
+            <h3 class="text-info" style="border-bottom: 1px dashed #3987AD">Dataflow Diagram</h3>
+            <div class="col-lg-12" style="margin: 20px;"><div id="sankeydom"></div></div>
+        </div>
+        $if indexflag == 1:
+            <div class="row" style="background-color: #D9EDF6;margin:10px">
+                <h3 class="text-info" style="border-bottom: 1px dashed #3987AD">Case Summary</h3>
+                <div class="col-lg-3">
+                    <div id="casesize" class="thumbnail">
+                        <div class="row">
+                            <div class="col-lg-4"><img src="../static/img/sizeinfo.png" alt="casesize"></div>
+                            <div id="casesizedata" class="col-lg-8 text-center">Loading...</div>
+                        </div>
+                        <div class="row">
+                            <div class="caption" style="margin:5px">
+                                <h3 class="text-center" style="color: #707070">Case Size</h3>
+                            </div>
+                        </div>     
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div id="tablevols" class="thumbnail">
+                        <div class="row">
+                            <div class="col-lg-4"><img src="../static/img/warning.png" alt="tablevols"></div>
+                            <div id="tablevolsdata" class="col-lg-8 text-center">Loading...</div>
+                        </div>
+                        <div class="row">
+                            <div class="caption" style="margin:5px">
+                                <h3 class="text-warning text-center">Task max-vols</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div id="failedtask" class="thumbnail">
+                        <div class="row">
+                            <div id="failedimg" class="col-lg-4">Loading...</div>
+                            <div id="failedtaskdata" class="col-lg-8 text-center">Loading...</div>
+                        </div>
+                        <div class="row">
+                            <div class="caption" style="margin:5px">
+                                <h3 class="text-danger text-center">Failed Tasks</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div id="tableamount" class="thumbnail">
+                        <!--<span class="glyphicon glyphicon-equalizer" style="font-size: 96px;"></span> 256
+            <div class="caption" style="border-top: 2px solid #D2DFE5;">
+                <h3 class="text-success text-right">Number of Tables</h3>
+            </div>-->
+                        <div class="row">
+                            <div class="col-lg-4"><img src="../static/img/success.png" alt="failedtask"></div>
+                            <div id="tableamountdata" class="col-lg-8 text-center">Loading...</div>
+                        </div>
+                        <div class="row">
+                            <div class="caption" style="margin:5px">
+                                <h3 class="text-success text-center">Number of Tables</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        <div class="row" style="background-color: #D9EDF6; margin: 10px">
+            <h3 class="text-info" style="border-bottom: 1px dashed #3987AD">History Analysis</h3>
+            <div class="row" style="margin-left: 10px">
+                <div class="col-lg-9 col-md-9"><div id="tat_matrix"></div></div>
+                <div class="col-lg-3 col-md-3"><div id="tat_rank"></div></div> 
+            </div>
+            <div class="row" style="margin-left:10px">
+                <div class="col-lg-9 col-md-3"><div id="failrate"></div></div>
+                <div class="col-lg-3 col-md-3"><div id="failraterank"></div></div> 
+            </div>
+        </div>
+    </div>
+
+    <script id="caseScript" type="text/javascript" src="../static/js/misc/casepage.js" local-data="$index&$indexflag"></script>
+</body>
+</html>

@@ -1,0 +1,666 @@
+﻿$def with () 
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Demo</title>
+
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet" />
+    <style type="text/css">
+        #casesize {
+            background-color: #D9EDF6;
+            color: #3987AD;
+            font-size: 48px;
+            margin: 10px;
+        }
+        #tablevols {
+            background-color: #FDF8E4;
+            color: #C09954;
+            font-size: 48px;
+            margin: 10px;
+        }
+        #tableamount {
+            background-color: #F2DEDF;
+            color: #BE4846;
+            font-size: 48px;
+            margin: 10px;
+        }
+        #failedtask {
+            background-color: #DEF0D8;
+            color: #448948;
+            font-size: 48px;
+            margin: 10px;
+        }
+    </style>
+    <script src="../static/js/jquery.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/echarts/echarts.min.js"></script>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div id="dom1" class="col-lg-12" style="width:1200px; height:700px"></div>
+        </div>
+        <div class="row">
+            <div id="dom2" class="col-lg-12" style="width:1200px; height:700px"></div>
+        </div>
+        <!--<div class="row">
+            <div id="dom2" class="col-lg-12" style="width:380px; height:200px"></div>
+        </div>
+        <div class="row">
+            <div id="dom3" class="col-lg-12" style="width:600px; height:400px"></div>
+        </div>-->
+        <div class="row">
+            <div id="dom4" class="col-lg-6" style="width:600px; height:400px"></div>
+            <div id="dom5" class="col-lg-6" style="width:600px; height:400px"></div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                <div id="casesize" class="thumbnail">
+                    <div class="col-lg-6"><img src="../static/img/sizeinfo.png" alt="casesize"></div>
+                    <div id ="casesize_value" class="col-lg-6 text-center">256</div>
+                    <!--<span class="glyphicon glyphicon-equalizer" style="font-size: 96px;"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;256-->
+                    <div class="caption">
+                        <h3 class="text-info text-right">Case size</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div id="tablevols" class="thumbnail">
+                    <div class="row">
+                        <div class="col-lg-6"><img src="../static/img/warning.png" alt="tablevols"></div>
+                        <div class="col-lg-6 text-center">256</div>
+                    </div>
+                    <div class="row" style="border-top: 2px solid #D2DFE5;">
+                        <div class="caption">
+                            <h3 class="text-warning text-right">Table Volumes</h3>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div id="tableamount" class="thumbnail">
+                    <span class="glyphicon glyphicon-equalizer" style="font-size: 96px;"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;256
+                    <div class="caption" style="border-top: 2px solid #D2DFE5;">
+                        <h3 class="text-danger text-right">Failed tasks</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div id="failedtask" class="thumbnail">
+                    <span class="glyphicon glyphicon-equalizer" style="font-size: 96px;"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;256
+                    <div class="caption" style="border-top: 2px solid #D2DFE5;">
+                        <h3 class="text-success text-right">Number of tables</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+
+        var myChart1 = echarts.init(document.getElementById('dom1'));
+        var myChart2 = echarts.init(document.getElementById('dom2'));
+        //var myChart3 = echarts.init(document.getElementById('dom3'));
+        var myChart4 = echarts.init(document.getElementById('dom4'));
+        var myChart5 = echarts.init(document.getElementById('dom5'));
+        var sankeyData = "../static/data/casepageSankey.json";
+
+        function arrAvg(list) {
+            var data = list;
+            var res = -1.0;
+            if (!data.length) {
+                console.log("Empty list provided!");
+                return false;
+            } else {
+                for (var i = 0; i < data.length; i++) {
+                    res += data[i] / data.length * 1.0;
+                }
+                return res;
+            }
+        }
+
+        // quick sort
+        function quicksort(a,b,left,right){
+            if(left>right){ 
+                return;
+            }
+             
+            var i=left,
+            j=right,
+            base = a[left]; 
+            base1 = b[left];
+            
+            while(i!=j){ 
+                while (a[j] >= base && i < j) { j--;} 
+                while (a[i] <= base && i < j) { i++;} 
+            if(i<j){  
+                t=a[i];
+                a[i]=a[j];
+                a[j] = t;
+                t1 = b[i];
+                b[i] = b[j];
+                b[j] = t1;
+                } 
+            } 
+             
+            a[left] = a[i];
+            a[i] = base;
+
+            b[left] = b[i];
+            b[i] = base1;
+            
+            quicksort(a,b,left,i-1);
+            quicksort(a,b,i+1,right);
+        }
+
+/*        function qsort(arr0, arr1, left, right) {
+            var i = left;
+            var j = right;
+            var tmp0, tmp1;
+            var base = arr0[Math.floor(left + right) / 2.0];
+            var base1 = arr1[Math.floor(left + right) / 2.0];
+            var res = new Object();
+
+            if (arr0.length <= 1) {
+                res.data = arr0;
+                res.cat = arr1;
+                return res;
+            }
+
+            if (left > right) { return; }
+            while (i < j) {
+                while (i < j && arr0[j] > base) { j--; }
+                while (i < j && arr0[i] < base) { i++; }
+                if (i < j) {
+                    tmp0 = arr0[i];
+                    arr0[i] = arr0[j];
+                    arr0[j] = tmp0;
+
+                    tmp1 = arr1[i];
+                    arr1[i] = arr1[j];
+                    arr1[j] = tmp1;
+                }
+            }
+            //exchange the number in i and in baseindex
+            //arr0[left] = arr0[i];
+            //arr0[i] = base;
+            //arr1[left] = arr1[i];
+            //arr1[i] = base1;
+
+            qsort(arr0, arr1, left, i - 1);
+            qsort(arr0, arr1, i, right);
+            res.data = arr0;
+            res.cat = arr1;
+
+            return res;
+        }*/
+        debugger;
+        b = [5, 3, 1, 2, 4];
+        a = ["Bob", "Anna", "Mary", "Lucy", "Mike"];
+        quicksort(b, a, 0, b.length - 1);
+
+        function getVirtulData(year) {
+            year = year || '2017';
+            var date = +echarts.number.parseDate(year + '-01-01');
+            var end = +echarts.number.parseDate((+year + 1) + '-01-01');
+            var dayTime = 3600 * 24 * 1000;
+            var data = [];
+            for (var time = date; time < end; time += dayTime) {
+                data.push([
+                    echarts.format.formatTime('yyyy-MM-dd', time),
+                    Math.floor(Math.random() * 1000)
+                ]);
+            }
+            return data;
+        }
+
+
+        dsOption = {
+            title: {
+                text: 'TAT trend for case with specific tasks',
+                x: 'center'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: ['task0', 'task1', 'task2', 'task3', 'task4'],
+                x: 'center',
+                //y: 'bottom',
+                y2:100
+            },
+            dataZoom: {
+                show: true,
+                realtime: true,
+                //orient: 'vertical',   // 'horizontal'
+                //x: 'right',
+                //y: 'bottom',
+                y2: 50,
+                //width: 400,
+                height: 30,
+                //backgroundColor: 'rgba(221,160,221,0.5)',
+                //dataBackgroundColor: 'rgba(138,43,226,0.5)',
+                //fillerColor: 'rgba(38,143,26,0.6)',
+                //handleColor: 'rgba(128,43,16,0.8)',
+                //xAxisIndex:[],
+                //yAxisIndex:[],
+                //start: 30,
+                //end: 80
+            },
+            grid: {
+                y: 50,
+                y2: 150
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: [
+                {
+                    name: 'task0',
+                    type: 'line',
+                    stack: true,
+                    smooth: true,
+                    itemStyle: { normal: { areaStyle: { type: 'default' } } },
+                    data: [120, 132, 101, 134, 90, 230, 210]
+                },
+                {
+                    name: 'task1',
+                    type: 'line',
+                    stack: true,
+                    smooth: true,
+                    itemStyle: { normal: { areaStyle: { type: 'default' } } },
+                    data: [220, 182, 191, 234, 290, 330, 310]
+                },
+                {
+                    name: 'task2',
+                    type: 'line',
+                    stack: true,
+                    smooth: true,
+                    itemStyle: { normal: { areaStyle: { type: 'default' } } },
+                    data: [150, 232, 201, 154, 190, 330, 410]
+                },
+                {
+                    name: 'task3',
+                    type: 'line',
+                    stack: true,
+                    smooth: true,
+                    itemStyle: { normal: { areaStyle: { type: 'default' } } },
+                    data: [320, 332, 301, 0, 0, 330, 320]
+                },
+                {
+                    name: 'task4',
+                    type: 'line',
+                    stack: true,
+                    smooth: true,
+                    itemStyle: { normal: { areaStyle: { type: 'default' } } },
+                    data: [820, 932, 901, 934, 1290, 1330, 1320]
+                }
+            ],
+            color: [
+                  '#fa646f',
+                  '#8ee1e0',
+                  '#f1908b',
+                  '#dc2730',
+                  '#feae6c'
+            ]
+        };
+
+        dzOption ={
+            tooltip: {
+                trigger: 'axis'
+            },
+            xAxis: [
+                {
+                    type: 'value' 
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: ['task0', 'task1', 'task2', 'task3', 'task4']
+                }
+            ],
+            series: [
+                {
+                    name: 'dz',
+                    type: 'bar',
+                    data: [1, 2, 3, 4, 5],
+                    barWidth: 25
+                }
+            ],
+            calculable: false
+        };
+
+        myChart4.setOption(dsOption);
+        myChart5.setOption(dzOption);
+
+        myChart4.on('datazoom', function (params) {
+            console.log(params);
+            var sLen = dsOption.xAxis[0].data.length - 1;
+            var s_point = Math.ceil(params.start * sLen / 100.0);
+            var e_point = Math.floor(params.end * sLen / 100.0) + 1;
+            var dz_y_data = []
+            var dz_s_data = []
+            var tLen = dsOption.series.length;
+            //console.log(dsOption.xAxis[0].data[s_point]);
+            //console.log(dsOption.xAxis[0].data[e_point]);
+
+            for (var i = 0; i < dsOption.series.length; i++) {
+                dz_y_data.push(dsOption.series[i].name);
+                dz_s_data.push(arrAvg(dsOption.series[i].data.slice(s_point, e_point)));
+            }
+
+            quicksort(dz_s_data, dz_y_data, 0, tLen - 1);
+            dzOption.yAxis[0].data = dz_y_data;
+            dzOption.series[0].data = dz_s_data;
+            //var tmp_arr0 = dsOption.series[0].data.slice(s_point, e_point);
+            //var tmp_arr1 = dsOption.series[1].data.slice(s_point, e_point);
+            //var tmp_arr2 = dsOption.series[2].data.slice(s_point, e_point);
+            //var tmp_arr3 = dsOption.series[3].data.slice(s_point, e_point);
+            //var tmp_arr4 = dsOption.series[4].data.slice(s_point, e_point);
+
+            //dzOption.series[0].data[0] = arrAvg(tmp_arr0);
+            //dzOption.series[0].data[1] = arrAvg(tmp_arr1);
+            //dzOption.series[0].data[2] = arrAvg(tmp_arr2);
+            //dzOption.series[0].data[3] = arrAvg(tmp_arr3);
+            //dzOption.series[0].data[4] = arrAvg(tmp_arr4);
+
+            myChart5.setOption(dzOption);
+        });
+
+        //option1 = {
+        //    title: {
+        //        text: 'Data disk usage trend'
+        //    },
+        //    tooltip : {
+        //        trigger: 'axis',
+        //        axisPointer : {
+        //            type: 'shadow'
+        //        }
+        //    },
+        //    legend: {
+        //        data:['Bicwkr3','Bicwkr4','Bicwkr5','Bicwkr6'],
+        //        show: false
+        //    },
+        //    calculable : true,
+        //    xAxis : [
+        //        {
+        //            type : 'category',
+        //            data : ['1','3','5','7','9','11','13'],
+        //            axisLabel : {show : false},
+        //            axisTick: {show : false}
+        //        }
+        //    ],
+        //    yAxis : [
+        //        {
+        //            type : 'value',
+        //            splitArea : {show : true},
+        //            axisLabel : {show : false},
+        //            axisTick : {show : false}
+        //        }
+        //    ],
+        //    grid: {
+        //        x:40,
+        //        width:300
+        //    },
+        //    series : [
+        //        {
+        //            name:'Bicwkr3',
+        //            type:'line',
+        //            data:[320, 332, 301, 334, 390, 330, 320]
+        //        },
+        //        {
+        //            name:'Bicwkr4',
+        //            type:'line',
+        //            data:[120, 132, 101, 134, 90, 230, 210]
+        //        },
+        //        {
+        //            name:'Bicwkr5',
+        //            type:'line',
+        //            data:[220, 182, 191, 234, 290, 330, 310]
+        //        },
+        //        {
+        //            name:'Bicwkr6',
+        //            type:'line',
+        //            data:[150, 232, 201, 154, 190, 330, 410]
+        //        }
+        //    ]
+        //};
+
+        //option2 = {
+        //    title: {
+        //        text: 'Sys disk usage trend'
+        //    },
+        //    tooltip : {
+        //        trigger: 'axis',
+        //        axisPointer : {
+        //            type: 'shadow'
+        //        }
+        //    },
+        //    legend: {
+        //        data:['Bicwkr3','Bicwkr4','Bicwkr5','Bicwkr6'],
+        //        x: 'center',
+        //        y: 'bottom'
+        //    },
+        //    calculable : true,
+        //    xAxis : [
+        //        {
+        //            type : 'category',
+        //            data : ['1','3','5','7','9','11','13'],
+        //            axisLabel : {show : false},
+        //            axisTick : {show : false}
+        //        }
+        //    ],
+        //    yAxis : [
+        //        {
+        //            type : 'value',
+        //            splitArea : {show : true},
+        //            axisLabel : {show : false},
+        //            axisTick : {show : false}
+        //        }
+        //    ],
+        //    grid: {
+        //        x: 40,
+        //        width:300
+        //    },
+        //    series : [
+        //        {
+        //            name:'Bicwkr3',
+        //            type:'line',
+        //            data:[320, 332, 301, 334, 390, 330, 320]
+        //        },
+        //        {
+        //            name:'Bicwkr4',
+        //            type:'line',
+        //            data:[120, 132, 101, 134, 90, 230, 210]
+        //        },
+        //        {
+        //            name:'Bicwkr5',
+        //            type:'line',
+        //            data:[220, 182, 191, 234, 290, 330, 310]
+        //        },
+        //        {
+        //            name:'Bicwkr6',
+        //            type:'line',
+        //            data:[150, 232, 201, 154, 190, 330, 410]
+        //        }
+        //    ]
+        //};
+
+        //myChart1.setOption(option1);
+        //myChart2.setOption(option2);
+
+        //echarts.connect([myChart1, myChart2]);
+
+
+        //jQuery.getJSON(sankeyData, function (data) {
+
+        //    myChart3.setOption(option = {
+        //        title: {
+        //            text: 'Sankey Diagram'
+        //        },
+        //        tooltip: {
+        //            trigger: 'item',
+        //            triggerOn: 'mousemove'
+        //        },
+        //        series: [
+        //            {
+        //                type: 'sankey',
+        //                layout: 'none',
+        //                data: data.nodes,
+        //                links: data.links,
+        //                itemStyle: {
+        //                    normal: {
+        //                        borderWidth: 1,
+        //                        borderColor: '#aaa'
+        //                    }
+        //                },
+        //                lineStyle: {
+        //                    normal: {
+        //                        curveness: 0.5
+        //                    }
+        //                }
+        //            }
+        //        ]
+        //    });
+        //});
+
+
+        $$("#casesize_value").text("18");
+
+        optionCalendar = {
+            tooltip: {
+                position: 'top'
+            },
+            visualMap: {
+                min: 0,
+                max: 1000,
+                calculable: true,
+                orient: 'horizontal',
+                //left: 'right',
+                //top: 'center',
+                x: 'center',
+                y:'bottom'
+            },
+
+            calendar: [
+            {
+                range: '2017',
+                cellSize: ['auto', 20]
+            },
+            {
+                top: 260,
+                range: '2016',
+                cellSize: ['auto', 20]
+            },
+            {
+                top: 450,
+                range: '2015',
+                cellSize: ['auto', 20],
+                right: 5
+            }],
+
+            series: [{
+                type: 'heatmap',
+                coordinateSystem: 'calendar',
+                calendarIndex: 0,
+                data: getVirtulData(2017)
+            }, {
+                type: 'heatmap',
+                coordinateSystem: 'calendar',
+                calendarIndex: 1,
+                data: getVirtulData(2016)
+            }, {
+                type: 'heatmap',
+                coordinateSystem: 'calendar',
+                calendarIndex: 2,
+                data: getVirtulData(2015)
+            }]
+
+        };
+
+        myChart1.setOption(optionCalendar);
+        //***************************************************************************//
+
+        var hours = ['12a', '1a', '2a', '3a', '4a', '5a', '6a',
+                '7a', '8a', '9a', '10a', '11a',
+                '12p', '1p', '2p', '3p', '4p', '5p',
+                '6p', '7p', '8p', '9p', '10p', '11p'];
+        var days = ['Saturday', 'Friday', 'Thursday',
+                'Wednesday', 'Tuesday', 'Monday', 'Sunday'];
+
+        var data = [[0, 0, 5], [0, 1, 1], [0, 2, 0], [0, 3, 0], [0, 4, 0], [0, 5, 0], [0, 6, 0], [0, 7, 0], [0, 8, 0], [0, 9, 0], [0, 10, 0], [0, 11, 2], [0, 12, 4], [0, 13, 1], [0, 14, 1], [0, 15, 3], [0, 16, 4], [0, 17, 6], [0, 18, 4], [0, 19, 4], [0, 20, 3], [0, 21, 3], [0, 22, 2], [0, 23, 5], [1, 0, 7], [1, 1, 0], [1, 2, 0], [1, 3, 0], [1, 4, 0], [1, 5, 0], [1, 6, 0], [1, 7, 0], [1, 8, 0], [1, 9, 0], [1, 10, 5], [1, 11, 2], [1, 12, 2], [1, 13, 6], [1, 14, 9], [1, 15, 11], [1, 16, 6], [1, 17, 7], [1, 18, 8], [1, 19, 12], [1, 20, 5], [1, 21, 5], [1, 22, 7], [1, 23, 2], [2, 0, 1], [2, 1, 1], [2, 2, 0], [2, 3, 0], [2, 4, 0], [2, 5, 0], [2, 6, 0], [2, 7, 0], [2, 8, 0], [2, 9, 0], [2, 10, 3], [2, 11, 2], [2, 12, 1], [2, 13, 9], [2, 14, 8], [2, 15, 10], [2, 16, 6], [2, 17, 5], [2, 18, 5], [2, 19, 5], [2, 20, 7], [2, 21, 4], [2, 22, 2], [2, 23, 4], [3, 0, 7], [3, 1, 3], [3, 2, 0], [3, 3, 0], [3, 4, 0], [3, 5, 0], [3, 6, 0], [3, 7, 0], [3, 8, 1], [3, 9, 0], [3, 10, 5], [3, 11, 4], [3, 12, 7], [3, 13, 14], [3, 14, 13], [3, 15, 12], [3, 16, 9], [3, 17, 5], [3, 18, 5], [3, 19, 10], [3, 20, 6], [3, 21, 4], [3, 22, 4], [3, 23, 1], [4, 0, 1], [4, 1, 3], [4, 2, 0], [4, 3, 0], [4, 4, 0], [4, 5, 1], [4, 6, 0], [4, 7, 0], [4, 8, 0], [4, 9, 2], [4, 10, 4], [4, 11, 4], [4, 12, 2], [4, 13, 4], [4, 14, 4], [4, 15, 14], [4, 16, 12], [4, 17, 1], [4, 18, 8], [4, 19, 5], [4, 20, 3], [4, 21, 7], [4, 22, 3], [4, 23, 0], [5, 0, 2], [5, 1, 1], [5, 2, 0], [5, 3, 3], [5, 4, 0], [5, 5, 0], [5, 6, 0], [5, 7, 0], [5, 8, 2], [5, 9, 0], [5, 10, 4], [5, 11, 1], [5, 12, 5], [5, 13, 10], [5, 14, 5], [5, 15, 7], [5, 16, 11], [5, 17, 6], [5, 18, 0], [5, 19, 5], [5, 20, 3], [5, 21, 4], [5, 22, 2], [5, 23, 0], [6, 0, 1], [6, 1, 0], [6, 2, 0], [6, 3, 0], [6, 4, 0], [6, 5, 0], [6, 6, 0], [6, 7, 0], [6, 8, 0], [6, 9, 0], [6, 10, 1], [6, 11, 0], [6, 12, 2], [6, 13, 1], [6, 14, 3], [6, 15, 4], [6, 16, 0], [6, 17, 0], [6, 18, 0], [6, 19, 0], [6, 20, 1], [6, 21, 2], [6, 22, 2], [6, 23, 6]];
+
+        data = data.map(function (item) {
+            return [item[1], item[0], item[2] || '-'];
+        });
+
+        optionCalendar2 = {
+            tooltip: {
+                position: 'top'
+            },
+            animation: false,
+            grid: {
+                height: '50%',
+                y: '10%'
+            },
+            xAxis: {
+                type: 'category',
+                data: hours,
+                splitArea: {
+                    show: true
+                }
+            },
+            yAxis: {
+                type: 'category',
+                data: days,
+                splitArea: {
+                    show: true
+                }
+            },
+            visualMap: {
+                min: 0,
+                max: 10,
+                calculable: true,
+                orient: 'horizontal',
+                left: 'center',
+                bottom: '15%'
+            },
+            series: [{
+                name: 'Punch Card',
+                type: 'heatmap',
+                data: data,
+                label: {
+                    normal: {
+                        show: true
+                    }
+                },
+                itemStyle: {
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }]
+        };
+
+        myChart2.setOption(optionCalendar2);
+
+    </script>
+</body>
+</html> 

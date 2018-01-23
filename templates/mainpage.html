@@ -1,0 +1,115 @@
+﻿$def with ()
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Performance</title>
+
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../static/js/jquery.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/echarts/echarts.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <nav class="navbar navbar-default">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navdata" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">DASHBOARD</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="navdata">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="/">Home <span class="sr-only">(current)</span></a></li>
+                        <li><a href="/mail_input" target="_blank">BI VIEW</a></li>
+                        <li><a href="/dailymonitor" target="_blank">Reporting Demo</a></li>
+                        <li class="dropdown">
+                            <a href="#" id="kpis" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">KPIs <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="kpis">
+                                <li><a href="#cpu" data-toggle="tab" tabindex="-1" id="cputab" onclick="getcpudata()">CPU</a></li>
+                                <li><a href="#memory" data-toggle="tab" tabindex="-1" id="memorytab" onclick="getmemorydata()">Memory</a></li>
+                                <li><a href="#disk" data-toggle="tab" tabindex="-1" id="disktab">Disk Space</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <form class="navbar-form navbar-right">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                        </div>
+                        <button type="submit" class="btn btn-default">Submit</button>
+                    </form>
+                </div>
+            </nav>
+        </div>
+        <div class="row">
+            <div class="tab-content">
+                <!--Containers for cpu matrices-->
+                <div id="cpu" class="tab-pane active">
+                    <div class="row">
+                        <div id="bicwkr3_cpu" class="col-lg-4" style="width:380px; height:280px" onclick="window.open('/wkrpage?name=MACHINE2', '_blank')"></div>
+                        <div id="bicwkr4_cpu" class="col-lg-4" style="width:380px; height:280px" onclick="window.open('/wkrpage?name=MACHINE3', '_blank')"></div>
+                        <div id="cputrend" class="col-lg-4" style="width:400px; height:240px"></div>
+                    </div>
+                    <div class="row">
+                        <div id="bicwkr5_cpu" class="col-lg-4" style="width:380px; height:280px" onclick="window.open('/wkrpage?name=MACHINE4', '_blank')"></div>
+                        <div id="bicwkr6_cpu" class="col-lg-4" style="width:380px; height:280px" onclick="window.open('/wkrpage?name=MACHINE5', '_blank')"></div>
+                        <div id="case_summary_cpu" class="col-lg-4" style="width:380px; height:280px"></div>
+                    </div>
+                </div>
+
+                <!--Containers for memory matrices-->
+                <div id="memory" class="tab-pane">
+                    <div class="row">
+                        <div id="bicwkr3_memory" class="col-lg-4" style="width:380px; height:280px" onclick="window.open('/wkrpage?name=MACHINE2', '_blank')"></div>
+                        <div id="bicwkr4_memory" class="col-lg-4" style="width:380px; height:280px" onclick="window.open('/wkrpage?name=MACHINE3', '_blank')"></div>
+                        <div id="memorytrend" class="col-lg-4" style="width:400px; height:240px"></div>
+                    </div>
+                    <div class="row">
+                        <div id="bicwkr5_memory" class="col-lg-4" style="width:380px; height:280px" onclick="window.open('/wkrpage?name=MACHINE4', '_blank')"></div>
+                        <div id="bicwkr6_memory" class="col-lg-4" style="width:380px; height:280px" onclick="window.open('/wkrpage?name=MACHINE5', '_blank')"></div>
+                        <div id="case_summary_memory" class="col-lg-4" style="width:380px; height:280px"></div>
+                    </div>
+
+                </div>
+
+                <!--Containers for disk matrices-->
+                <div id="disk" class="tab-pane">
+                    <div class="row">
+                        <div id="bicwkr_disks" class="col-lg-8" style="width:750px; height:400px"></div>
+                        <div class="col-lg-4">
+                            <div class="row">
+                                <div id="sysdisktrend" style="width:380px;height:200px"></div>
+                            </div>
+                            <div class="row">
+                                <div id="datadisktrend" style="width:380px;height:200px"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-8" style="width:780px; height:400px"></div>
+                        <div id="case_summary_disk" class="col-lg-4" style="width:380px; height:280px"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div id="respondtext" class="col-lg-12"></div>
+        </div>
+
+    </div>
+
+    <script type="text/javascript" src="../static/js/misc/mainpage.js"></script>
+</body>
+
+</html>

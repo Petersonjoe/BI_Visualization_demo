@@ -1,0 +1,26 @@
+# Windows:
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+render.html
+
+# Python:
+*.py[cod]
+*.so
+*.egg
+*.egg-info
+
+# Misc
+*.1f1
+*.config
+*.pyproj
+*.ia4
+*.dbb
+*.txt
+
+# LocalConfig
+test.db
+sessions
+bin
+invnet
+obj/Debug

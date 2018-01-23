@@ -1,0 +1,116 @@
+﻿$def with (name, data)
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>$name</title>
+
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../static/js/jquery.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/echarts/echarts.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <nav class="navbar navbar-default">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navdata" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">$name Detail</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="navdata">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="/">Home <span class="sr-only">(current)</span></a></li>
+                        <li><a href="/mail_input">BI VIEW</a></li>
+                    </ul>
+                    <form class="navbar-form navbar-right">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                        </div>
+                        <button type="submit" class="btn btn-default">Submit</button>
+                    </form>
+                </div>
+            </nav>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-6 col-sm-4">
+                <div id="cpu" style="width: 400px;height:300px;margin-top:50px"></div>
+            </div>
+            <div class="col-xs-6 col-sm-4">
+                <div id="memory" style="width: 400px;height:300px;margin-top:50px"></div>
+            </div>
+            <div class="col-xs-6 col-sm-4">
+                <div id="disk" style="width: 400px;height: 300px"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div id="casecate" class="col-lg-12 col-md-12 col-sm-12" style="width:1200px; height:500px"></div>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div id="page-wrapper">
+            <div class="main-page">
+                <div class="tables">
+                    <h3 class="title1">Cases of $name</h3>
+                    <div class="panel-body widget-shadow">
+                        <h4>Cases of $name:</h4>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>&nbsp;</th>
+                                    <th>Case Name</th>
+                                    <th>Owner</th>
+                                    <th>Status</th>
+                                    <th>Create Datetime</th>
+                                    <th>Case Size (mb)</th>
+                                    <th>Time Used</th>
+                                    <th>#Records</th>
+                                    <th>#Vol In</th>
+                                    <th>#Vol Out</th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                $for i in range(len(data["cid"])):
+                                    $ caseid = data["cid"][i]
+                                    <tr>
+                                        <th scope="row">${i+1}</th>
+                                        <td>$data["pname"][i]</td>
+                                        <td>$data["owner"][i]</td>
+                                        <td>$data["cstatus"][i]</td>
+                                        <td>$data["casecreatedate"][i]</td>
+                                        <td>$data["casesize"][i]</td>
+                                        <td>$data["timeconsumed"][i]</td>
+                                        <td>$data["#Records"][i]</td>
+                                        <td>$data["#flowin"][i]</td>
+                                        <td>$data["#flowout"][i]</td>
+                                    $if cmp(data["cstatus"][i], "processing") == 0:
+                                        <td><button type="submit" value="Sign up" class="btn btn-block">Analysis</button></td>
+                                    $else:
+                                        <td><button type="submit" value="Sign up" class="btn btn-primary" onclick="window.open('/casepage?cid=$caseid', '_blank')">Analysis</button></td>
+                                    </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script id="graphicScript" type="text/javascript" src="../static/js/misc/wkrpage.js" local-data="$name"></script>
+</body>
+
+</html>

@@ -1,0 +1,148 @@
+﻿$def with (result, duration)
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Results</title>
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../static/css/bootstrap-theme.min.css" rel="stylesheet" />
+    <style type="text/css">
+        #maininfo{
+            background-color: ivory;
+            height: 800px;
+            padding-right: 5px;
+            border-color: ActiveBorder;
+        }
+        #legendinfo{
+            background-color: #ffffcc;   
+            height: 800px;
+            padding-left: 5px;
+            color: #663333;
+            border-color: ActiveBorder;
+        }
+        #infocontainer{
+            height: 55px;
+            width: auto;
+            border-bottom: 5px dotted double;
+            padding-bottom: 5px;
+        }
+        #legendlist{
+            padding-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PeopleFinder Results</h1>
+        <nav class="navbar navbar-inverse">      
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-menu" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand " href="#">HPE</a>
+            </div>
+            <div id="navbar-menu" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Results</a></li>
+                    <li> <a href="/charts?type=bar">Charts</a></li>
+                    <li><a href="/mail_input">BI VIEW</a></li>
+                </ul>
+            </div>
+        </nav>
+        <div id="content" class="row-fluid">
+            <div id="maininfo" class="col-lg-9 text-danger">
+                <div id="category1" class="col-lg-3 text-success">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr><th>Result Category 0</th></tr>
+                        </thead>
+                        <tbody>
+                            $for key, value in result.items():
+                                $if value == 0:
+                                    <tr><td>$key</td></tr>
+                            <tr><td>&nbsp;</td></tr>         
+                        </tbody>
+                    </table>
+                </div>
+                <div id="category2" class="col-lg-3 text-warning">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr><th>Result Category 1</th></tr>
+                        </thead>
+                        <tbody>
+                            $for key, value in result.items():
+                                $if value == 1:
+                                    <tr><td>$key</td></tr>
+                            <tr><td>&nbsp;</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="category3" class="col-lg-3 text-info">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr><th>Result Category 2</th></tr>
+                        </thead>
+                        <tbody>
+                            $for key, value in result.items():
+                                $if value == 2:
+                                    <tr><td>$key</td></tr>
+                            <tr><td>&nbsp;</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="category4" class="col-lg-3 text-danger">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr><th>Result Category 3</th></tr>
+                        </thead>
+                        <tbody>
+                            $for key, value in result.items():
+                                $if value == 3:
+                                    <tr><td>$key</td></tr>
+                            <tr><td>&nbsp;</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="legendinfo" class="col-lg-3">
+                <div id="infocontainer">
+                    <div class="col-lg-3"><img src="../static/img/info.png" alt="infomation" /></div>
+                    <div class="col-lg-9 text-info"><h3>Information</h3></div>
+                </div>
+                <div id="legendlist">
+                    <p><strong>Time:</strong> $duration seconds</p>
+                    <p><strong>Legend</strong></p>
+                    <ul>
+                        <li>0 - already in database but not found in web</li>
+                        <li>1 - already in database and found in web</li>
+                        <li>2 - not in database and not found in web</li>
+                        <li>3 - not in database and found in web</li>
+                    </ul>
+                </div>
+                <div>
+                    <table>
+                        <thead><tr><th>Mini Unit for Testing</th></tr></thead>
+                        <tbody>
+                            $for c in ["a", "b", "c", "d"]:
+                                <tr class="$loop.parity">
+                                    <td>$loop.index</td>
+                                    <td>$c</td>
+                                </tr>
+                        </tbody>
+                        
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../static/js/jquery.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+</body>
+</html>

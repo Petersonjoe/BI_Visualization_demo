@@ -1,0 +1,282 @@
+﻿$def with ()
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Daily Tracking</title>
+
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet" />
+    <style type="text/css">
+         input.form-control{
+             width: auto;
+         }
+         .loading{
+             width: 100%;
+             height: 100%;
+             position: inherit;
+             top: 0;
+             left: 0;
+             z-index: 100;  /* z-index is invalid when using position inherit*/
+             background: #fff;
+         }
+         .loading .pic{
+             width: 96px;
+             height: 96px;
+             background: url(../static/img/Loading.gif);
+             position: absolute;
+             top: 0;
+             bottom: 0;
+             left: 0;
+             right: 0;
+             margin: auto;
+         }
+
+    </style>
+    <script src="../static/js/jquery.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/echarts/echarts.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <nav class="navbar navbar-default">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navdata" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">DASHBOARD</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="navdata">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/mail_input">BI VIEW</a></li>
+                        <li class="active"><a href="#">Reporting Demo<span class="sr-only">(current)</span></a></li>
+                    </ul>
+                    <form class="navbar-form navbar-right">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                        </div>
+                        <button type="submit" class="btn btn-default">Submit</button>
+                    </form>
+                </div>
+            </nav>
+        </div>
+        <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-2">
+                <ul class="nav nav-pills nav-stacked">
+                    <li role="presentation" class="active">
+                        <a href="#home" aria-controls="home" role="tab" data-toggle="tab">
+                            <strong>INSTRUCTION</strong>
+                        </a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#unfixed" aria-controls="unfixed" role="tab" data-toggle="tab">
+                            List of Unfixed Cases
+                        </a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#errcategory" aria-controls="errcategory" role="tab" data-toggle="tab">
+                            Error Summary
+                        </a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#accountwarning" aria-controls="accountwarning" role="tab" data-toggle="tab">
+                            Account Warning
+                        </a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#manualdelete" aria-controls="manualdelete" role="tab" data-toggle="tab">
+                            Manual Deleted Required
+                        </a>
+                    </li>                    
+                </ul>
+            </div>
+            <div class="col-lg-10  col-md-10 col-sm-10">
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="home">
+                        <h3>Guidance for Daily Tracking</h3>
+                        <p> To finish <em>Daily Tracking</em> process, you may want to follow the tabs' order on the left</p>
+                        <ul>
+                            <li>
+                                <strong>List of Unfixed Cases:</strong>&nbsp;This table lists all the unfixed cases during the past 24 hours, process flow is:
+                                <ol>
+                                    <li>Click <strong>"Refresh"</strong> button, and you will retrieve the most recent unfixed case list</li>
+                                    <li>Select the <strong>"Error Category"</strong> for each row</li>
+                                    <li>Click <strong>"Update"</strong> button to complete the result upload to the database</li>
+                                    <li>Again, click <strong>"Refresh"</strong> button, if no content shown under the table header row, the unfixed cases tracking successfully completed</li>
+                                </ol>    
+                            </li>
+                            <br />
+                            <li>
+                                <strong>Error Summary:</strong>&nbsp;This tab shows the summary of failed cases grouped by both Error Category and Package Name
+                                <ul>
+                                    <li>No specific oprations needed. Once the <em>List of Unfixed Cases</em> finished, you only need to click the <strong>"Refresh"</strong> button to get the most recent results</li>
+                                </ul>
+                            </li>
+                            <br />
+                            <li>
+                                <strong>Account Warning:</strong>&nbsp;This table list the time information of accounts used in <a href="http://www.baidu.com" target="_blank">Account Management Page</a> 
+                                <ol>
+                                    <li>Click the <strong>"Refresh"</strong> button, get the most updated account information list</li>
+                                    <li>Click the corresponding <strong>Owner Email</strong>, notice the owner whose account will be expired</li>
+                                </ol>
+                            </li>
+                            <br />
+                            <li>
+                                <strong>Manual Deleted Required:</strong>&nbsp;This table lists the database location of cases that were "virtually" deleted in <a href="http://www.baidu.com/" target="_blank">platform</a> but still "stay" in the actual worker
+                                <ul>
+                                    <li>
+                                        Click <strong>"Refresh"</strong> button, extract the updated "virtually" deleted case records, and manually delete them in workers one by one
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="unfixed">
+                        <div class="row">                            
+                            <form class="form-horizontal">
+                                <button type="button" id="unfixedRefresh" data-loading-text="Refreshing..." class="btn btn-success" autocomplete="off">Refresh</button>
+                                <button type="button" id="unfixedUpdate" data-loading-text="Updating..." class="btn btn-info" autocomplete="off">Update</button>
+                                <div class="loading" style="border-top: 1px solid black; height:680px"><div class="pic"></div></div>
+                                <div class="table-responsive" style="border-top: 1px solid black; height:680px">
+                                    <table class="table table-condensed table-bordered table-hover table-striped table-highlight">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Package Name</th>
+                                                <th>Package Owner</th>
+                                                <th>Task Name</th>
+                                                <th>Task Category</th>
+                                                <th>Detail Message</th>
+                                                <th>Repaired</th>
+                                                <th style="min-width: 175px">Error Category</th>
+                                                <th>Operation Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="errcategory">
+                        <div class="row">
+                            <form class="form-horizontal">
+                                <button type="button" id="errRefresh" data-loading-text="Refreshing..." class="btn btn-success" autocomplete="off">Refresh</button>
+                                <div class="loading" style="border-top: 1px solid black; height:680px"><div class="pic"></div></div>
+                                <div class="table-responsive" style="border-top: 1px solid black; height:680px">
+                                    <div class="row" style="margin-left: 20px"><div id="errByCategory"></div></div>
+                                    <div class="row" style="margin-left: 20px"><div id="errByPackage"></div></div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="accountwarning">
+                        <div class="row">
+                            <form class="form-horizontal">
+                                <button type="button" id="warningRefresh" data-loading-text="Refreshing..." class="btn btn-success" autocomplete="off">Refresh</button> 
+                                <div class="loading" style="border-top: 1px solid black; height:680px"><div class="pic"></div></div>
+                                <div class="table-responsive" style="border-top: 1px solid black; height:680px">   <!-- Need to check ALT Admin FILES to see the fixed height solution-->
+                                    <table class="table table-striped table-highlight">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Data Source</th>
+                                                <th>DB Name</th>
+                                                <th>Owner</th>
+                                                <th>Owner Email</th>
+                                                <th>Account Category</th>
+                                                <th>Account</th>
+                                                <th>Expire Date</th>
+                                                <th>Periodical</th>
+                                                <th>Time Left</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="manualdelete">
+                        <div class="row">
+                            <form class="form-horizontal">
+                                <button type="button" id="manualRefresh" data-loading-text="Refreshing..." class="btn btn-success" autocomplete="off">Refresh</button>
+                                <div class="loading" style="border-top: 1px solid black; height:680px"><div class="pic"></div></div>
+                                <div class="table-responsive" style="border-top: 1px solid black; height: 680px">
+                                    <table class="table table-striped table-highlight">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Worker Name</th>
+                                                <th>DB Name</th>
+                                                <th>Package Name</th>
+                                                <th>Case Status</th>
+                                                <th>RIT Deleted Date</th>
+                                                <th>Case Created Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>   
+        </div>
+
+        <!-- Modal Placeholder -->
+        <div class="modal fade" id="modalHolder" tabindex="-1" role="dialog" aria-labelledby="modalPlaceHolder" aria-hidden="true">
+            <div class="modal-dialog" role="document" style="width: 1200px; height: 900px;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="holdertitle">Loading...</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal">
+                            <div class="table-responsive" style="height: 500px">
+                                <table class="table table-striped table-highlight" id="modalTableHolder">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Package Name</th>
+                                            <th>Package Owner</th>
+                                            <th>Task Name</th>
+                                            <th>Task Category</th>
+                                            <th>Detail Message</th>
+                                            <th>Repaired</th>
+                                            <th style="min-width: 175px">Error Category</th>
+                                            <th>Operation Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-warning">Preserved Btn</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="../static/js/misc/dailytracking.js"></script>
+</body>
+
+</html>

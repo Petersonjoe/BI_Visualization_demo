@@ -1,0 +1,76 @@
+[NTAccount];NT User Domain ID:
+[EmployeeRole];Null
+[EmployeeLevel];Employee Level:
+[CommonName];Common Name:
+[LegalName];Legal Name:
+[SurName];Surname:
+[GivenName];Given Name:
+[FamilyNamePrefix];Maiden_Name
+[ChineseName];Chinese_Name
+[CompanyName];Company Name:
+[HPRelationship];HP Relationship:
+[EmployeeNumber];Employee Number:
+[EmployeeType];Employee Type:
+[EmployeeStatus];Status:
+[StartDate];Start Date:
+[JobFunction];Job Function:
+[JobFamily];Job Family:
+[PayrollCountryCode];Payroll Country Code:
+[LocationCode];Location Code:
+[BusinessRegion];Business Region:
+[BusinessGroup];Business Group:
+[BusinessUnit];Business Unit:
+[OrganizationChart];Organization Chart:
+[MRU];MRU:
+[MRUCode];MRU Code:
+[Which_one_am_I];Which one am I?:
+[Assistant];Assistant:
+[AlternateManager];Alternate Manager:
+[WebUrl];Web URL:
+[Title];Title:
+[RadiusId];Radius ID:
+[ImapUrl];IMAP URL:
+[MailStop];Mailstop:
+[FloorNumber];Floor Number:
+[PostNumber];Post Number:
+[PictureUri];PictureURI:
+[HPPicturethumbnailUri];hpPictureThumbnailURI:
+[HPPictureonehpUri];hpPictureOneHpURI:
+[TelephoneNumber];Telephone:
+[VoicemailnetWorking];Voice Mail Networking:
+[AlternateTelephone];Alternate Telephone:
+[Fax];Fax:
+[MobileTelephone];Mobile Telephone:
+[Pager];Pager:
+[EmailAddressSet];Email Address:
+[OutboundAddress];Outbound Address:
+[RoutingAddress];Routing Address:
+[MsexchangeAddress];MS Exchange Address:
+[Street];Street:
+[City];City:
+[State_Province_Region];State/Province/Region:
+[PostalCode];Postal Code:
+[Country];Country:
+[BuildingName];Building Name:
+[PostalAddress];Postal Address:
+[UnixUserId];Unix User ID:
+[UidNumber];UID Number:
+[GidNumber];GID Number:
+[HomeDirectory];Home Directory:
+[LinuxShell];Linux Shell:
+[HpuxShell];HPUX Shell:
+[UnixEmailAddress];Unix Email Address:
+[UnixRoutingAddress];Routing Address:
+[DirectoryManagerEmail];Direct Manager Email:
+[DirectoryManagerPictureuri];Direct Manager Pic URL:
+[ManagerEmail];Manager Emails:
+[ManagerPictureuri];Manager Pic URLs:
+[UserID];User ID:
+[Email];Primary Email1:
+[SysUpdateTime];Current Time:
+[IsBETeam];Null
+[IsDeleted];Null
+[SysUpdateBy];Null
+[SysUpdateKey];Sys Update Key:
+[BETeamID];Null
+[HPEEmail];Primary Email2:
