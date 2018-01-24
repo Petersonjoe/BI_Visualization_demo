@@ -22,9 +22,12 @@ class Connector(object):
             self.cnxn = pyodbc.connect(self.connString)
             self.cursor = self.cnxn.cursor()
             return self.cursor
-        except Exception, e:
-            print e.message
-            raise
+        except:
+            import sqlite3
+            self.cnxn = sqlite3.connect(self.connString)
+            self.cursor = self.cnxn.cursor()
+            return self.cursor
+            print 'Shift to sqlite3'
 
     def execQuery(self):
         try:

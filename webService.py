@@ -68,10 +68,8 @@ class login:
                     userid = str(uuid.uuid4()).replace('-', '')
                     userpass = str(hashlib.sha1("sAlT754-" + regPassword).hexdigest())
                     db.connOpen()
-                    db.sqlQuery = "insert into Sample_Users(id, password, email) values ('" + userid + "','" + userpass + "','" + regEmail + "')"
+                    db.sqlQuery = "insert into Sample_Users(id, password, email, privilege) values ('" + userid + "','" + userpass + "','" + regEmail + "', 0)"
                     db.execQuery()
-                    #db.cursor.execute(db.sqlQuery)
-                    #db.cnxn.commit()
                     
                     # test if the regist event success
                     db.sqlQuery = "select count(*) from Sample_Users where email ='" + regEmail + "'"
