@@ -52,4 +52,101 @@ If you want to customize your own dashboard via this demo, please continue the f
 
 > **Coding Structure**
 
-To be continued...
+The project directory tree:
+
+	.
+	|   change.log
+	|   ReadMe.md
+	|   requirements.txt
+	|   settings.py
+	|   test.db
+	|   test.py
+	|   urls.py
+	|   webService.py
+	|   <br />
+	+---configurations
+	|   |   db.config
+	|   |   url.config
+	|   <br />            
+	+---static
+	|   +---css
+	|   |       bootstrap-theme.css
+	|   |       bootstrap-theme.css.map
+	|   |       bootstrap-theme.min.css
+	|   |       bootstrap-theme.min.css.map
+	|   |       bootstrap.css
+	|   |       bootstrap.css.map
+	|   |       bootstrap.min.css
+	|   |       bootstrap.min.css.map
+	|   |       tutorial.css
+	|   |       xmlstyle.css
+	|   |       
+	|   +---data
+	|   |       casepageSankey.json
+	|   |       
+	|   +---fonts
+	|   |       glyphicons-halflings-regular.eot
+	|   |       glyphicons-halflings-regular.svg
+	|   |       glyphicons-halflings-regular.ttf
+	|   |       glyphicons-halflings-regular.woff
+	|   |       glyphicons-halflings-regular.woff2
+	|   |       
+	|   +---img
+	|   |       danger0.png
+	|   |       danger1.png
+	|   |       gc_logo.png
+	|   |       glyphicons-halflings-white.png
+	|   |       glyphicons-halflings.png
+	|   |       home.jpg
+	|   |       home1.jpg
+	|   |       home2.jpg
+	|   |       info.png
+	|   |       Loading.gif
+	|   |       logo.png
+	|   |       sizeinfo.png
+	|   |       success.png
+	|   |       warning.png
+	|   |       webinput.jpg
+	|   |       
+	|   \---js
+	|       |   bootstrap.js
+	|       |   bootstrap.min.js
+	|       |   bootstrap.validator.js
+	|       |   jquery.min.js
+	|       |   json.js
+	|       |   npm.js
+	|       |   
+	|       +---echarts
+	|       |       echarts.api.map.js
+	|       |       echarts.api.mapfull.js
+	|       |       echarts.bmap.min.js
+	|       |       echarts.min.js
+	|       |       
+	|       \---misc
+	|               casepage.js
+	|               dailytracking.js
+	|               mainpage.js
+	|               wkrpage.js
+	|   <br />            
+	+---templates
+	|       casepage.html
+	|       dailymonitor.html
+	|       email_input.html
+	|       home.html
+	|       login.html
+	|       logout.html
+	|       mainpage.html
+	|       output.html
+	|       subpage.html
+	|       testdemo.html
+	|   <br />       
+	+---utils
+	        dataRequest.py
+	        dbAccess.py
+	        querySettings.py
+	        readConfig.py
+	        sqlserver2sqlite.py
+	        webCrawl.py
+	        __init__.py
+	        
+Will explain the function of the folder one by one.
