@@ -149,4 +149,22 @@ The project directory tree:
 	        webCrawl.py
 	        __init__.py
 	        
-Will explain the function of the folder one by one.
+There are 4 folders and 8 files in root directory. 
+
+### configurations ###
+
+In this folder, we defined two config files, respectively for the database and urls for crawling web data (currently not supported in this demo).
+
+### statics ###
+
+The static files for front-end web pages, such as CSS, JS and images are stored here. Since this demo aims to give a executable website with web.py framework, we will target the mainstream at how the frame applied, those front-end files will be introduced at a glimpse to support the understanding the frame, not the main points.
+
+### templates ###
+
+HTML files for displaying the contents are listed in this folder. You can customize your own pages and put it in this folder.
+
+### utils ###
+
+Containing main functions on back-end system, including data re-structuring and response module, database access module, data query module and read configuration files module.
+
+   
