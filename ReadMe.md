@@ -47,6 +47,10 @@ For each sample ETL case, you can browse the dashboard that analyzes whether thi
 
 ![Dashboard](https://i.imgur.com/54g5inp.gif)
 
+For monitoring the Current ETL platform, click as below operation flows.
+
+![](https://i.imgur.com/m1cZt38.gif)
+
 If you want to customize your own dashboard via this demo, please continue the following section.
 
 
